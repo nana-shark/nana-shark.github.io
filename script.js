@@ -10,13 +10,13 @@ function predictBloodType() {
     const parent2BloodType = document.getElementById('parent2').value;
     const resultDiv = document.getElementById('result');
 
-    // 親のどちらかがZ型の場合、子供は必ずZ型
+    // 親のどちらかが荒川型の場合、子供は必ず荒川型
     if (parent1BloodType === '荒川型' || parent2BloodType === '荒川型') {
-        resultDiv.innerHTML = `おめでとうございます！子供の血液型は <strong>荒川型</strong> になります！`;
+        resultDiv.innerHTML = `おめでとうございます！<br>子供の血液型は <strong>荒川型</strong><br>になります！`; // 修正点: 改行タグを追加
         resultDiv.style.backgroundColor = '#e8f5e9';
         resultDiv.style.borderColor = '#c8e6c9';
         resultDiv.style.color = '#2e7d32';
-        return; // Z型の場合はここで処理を終了
+        return; // 荒川型の場合はここで処理を終了
     }
 
     // 血液型から遺伝子型を推測するヘルパー関数
@@ -99,7 +99,8 @@ function predictBloodType() {
         resultDiv.style.borderColor = '#ffcdd2';
         resultDiv.style.color = '#d32f2f';
     } else {
-        resultDiv.innerHTML = `子供の血液型は <strong>${prediction}</strong> になる可能性があります。`;
+        // 修正点: 出力形式を希望の3行に調整
+        resultDiv.innerHTML = `子供の血液型は<br><strong>${prediction}</strong><br>になる可能性があります。`;
         resultDiv.style.backgroundColor = '#e8f5e9';
         resultDiv.style.borderColor = '#c8e6c9';
         resultDiv.style.color = '#2e7d32';
