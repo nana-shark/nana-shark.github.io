@@ -81,6 +81,10 @@
             align-items: center; /* 垂直方向の中央揃え */
             justify-content: center; /* 水平方向の中央揃え */
             line-height: 1.2; /* 行の高さを調整して、より自然な改行を促す */
+
+            white-space: normal; /* テキストの自動改行を許可する (デフォルト値) */
+            word-break: keep-all; /* 単語の途中で改行しないようにする（「型、」などの区切りで改行されやすくなる） */
+            overflow-x: hidden; /* 横方向のスクロールバーを非表示にする */
         }
         #result strong {
             color: #1b5e20;
