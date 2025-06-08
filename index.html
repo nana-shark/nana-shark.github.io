@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鳥澤チャイルドの血液型予測ツール</title>
+    <title>鳥澤チャイルドの<br>血液型予測ツール</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -96,7 +96,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>鳥澤チャイルドの血液型予測ツール</h1>
+        <h1>鳥澤チャイルドの<br>血液型予測ツール</h1>
 
         <div>
             <label for="parent1">大ちゃんの血液型:</label>
@@ -133,3 +133,148 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鳥澤チャイルドの<br>血液型予測ツール</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            -webkit-appearance: none; /* Safari/Chrome */
+            -moz-appearance: none;    /* Firefox */
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%204%205%22%3E%3Cpath%20fill%3D%22%23444%22%20d%3D%22M2%200L0%202h4zm0%205L0%203h4z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.1em;
+            color: #2e7d32;
+            min-height: 4.5em; /* 約4行分の高さ (font-size 1.1em * line-height * 4行) */
+            display: flex;
+            align-items: center; /* 垂直方向の中央揃え */
+            justify-content: center; /* 水平方向の中央揃え */
+            line-height: 1.2; /* 行の高さを調整して、より自然な改行を促す */
+
+            white-space: normal; /* テキストの自動改行を許可する (デフォルト値) */
+            word-break: keep-all; /* 単語の途中で改行しないようにする（「型、」などの区切りで改行されやすくなる） */
+            overflow-x: hidden; /* 横方向のスクロールバーを非表示にする */
+        }
+        #result strong {
+            color: #1b5e20;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #777;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>鳥澤チャイルドの<br>血液型予測ツール</h1>
+
+        <div>
+            <label for="parent1">大ちゃんの血液型:</label>
+            <select id="parent1">
+                <option value="A">A型</option>
+                <option value="B">B型</option>
+                <option value="O">O型</option>
+                <option value="AB">AB型</option>
+                <option value="荒川">荒川型</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="parent2">さほっちの血液型:</label>
+            <select id="parent2">
+                <option value="A">A型</option>
+                <option value="B">B型</option>
+                <option value="O">O型</option>
+                <option value="AB">AB型</option>
+                <option value="荒川">荒川型</option>
+            </select>
+        </div>
+
+        <button onclick="predictBloodType()">予測する</button>
+
+        <div id="result">
+            ここに予測結果が表示されます。
+        </div>
+
+        <footer>
+            <p>※このツールはABO式血液型の一般的な遺伝法則に基づいています。Rh因子は考慮していません。</p>
+            <p>※血液型の遺伝には例外や稀なケースも存在します。</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
