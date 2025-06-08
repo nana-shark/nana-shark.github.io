@@ -1,107 +1,136 @@
-/**
- * 親の血液型から子供の血液型を予測するJavaScriptファイル
- *
- * ABO式血液型の遺伝法則に基づいています。
- * 遺伝子型（例：A型でもAAとAOがある）を考慮して、可能性のある血液型を算出します。
- */
-
-function predictBloodType() {
-    const parent1BloodType = document.getElementById('parent1').value;
-    const parent2BloodType = document.getElementById('parent2').value;
-    const resultDiv = document.getElementById('result');
-
-    // 親のどちらかがZ型の場合、子供は必ずZ型
-    if (parent1BloodType === '荒川型' || parent2BloodType === '荒川型') {
-        resultDiv.innerHTML = `おめでとうございます！<br>子供の血液型は<br> <strong>荒川型</strong><br> になります！`;
-        resultDiv.style.backgroundColor = '#e8f5e9';
-        resultDiv.style.borderColor = '#c8e6c9';
-        resultDiv.style.color = '#2e7d32';
-        return; // Z型の場合はここで処理を終了
-    }
-
-    // 血液型から遺伝子型を推測するヘルパー関数
-    // A型 -> [AA, AO]
-    // B型 -> [BB, BO]
-    // O型 -> [OO]
-    // AB型 -> [AB]
-    function getGenotypes(bloodType) {
-        switch (bloodType) {
-            case 'A': return ['AA', 'AO'];
-            case 'B': return ['BB', 'BO'];
-            case 'O': return ['OO'];
-            case 'AB': return ['AB'];
-            default: return [];
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鳥澤チャイルドの<br>血液型予測ツール</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-    }
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            -webkit-appearance: none; /* Safari/Chrome */
+            -moz-appearance: none;    /* Firefox */
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%204%205%22%3E%3Cpath%20fill%3D%22%23444%22%20d%3D%22M2%200L0%202h4zm0%205L0%203h4z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.1em;
+            color: #2e7d32;
+            min-height: 4.5em; /* 約4行分の高さ (font-size 1.1em * line-height * 4行) */
+            display: flex;
+            align-items: center; /* 垂直方向の中央揃え */
+            justify-content: center; /* 水平方向の中央揃え */
+            line-height: 1.2; /* 行の高さを調整して、より自然な改行を促す */
+        }
+        #result strong {
+            color: #1b5e20;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #777;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>鳥澤チャイルドの<br>血液型予測ツール</h1>
 
-    // 各血液型の遺伝子表現
-    const genotypesMap = {
-        'A': ['A', 'A'],
-        'B': ['B', 'B'],
-        'O': ['O', 'O'],
-        'AB': ['A', 'B'],
-        'AA': ['A', 'A'],
-        'AO': ['A', 'O'],
-        'BB': ['B', 'B'],
-        'BO': ['B', 'O'],
-        'OO': ['O', 'O']
-    };
+        <div>
+            <label for="parent1">大ちゃんの血液型:</label>
+            <select id="parent1">
+                <option value="A">A型</option>
+                <option value="B">B型</option>
+                <option value="O">O型</option>
+                <option value="AB">AB型</option>
+                <option value="Z">Z型</option>
+            </select>
+        </div>
 
-    const possibleParent1Genotypes = getGenotypes(parent1BloodType);
-    const possibleParent2Genotypes = getGenotypes(parent2BloodType);
+        <div>
+            <label for="parent2">さほっちの血液型:</label>
+            <select id="parent2">
+                <option value="A">A型</option>
+                <option value="B">B型</option>
+                <option value="O">O型</option>
+                <option value="AB">AB型</option>
+                <option value="Z">Z型</option>
+            </select>
+        </div>
 
-    const possibleChildBloodTypes = new Set();
+        <button onclick="predictBloodType()">予測する</button>
 
-    // 全ての遺伝子型の組み合わせを試す
-    possibleParent1Genotypes.forEach(p1Genotype => {
-        const [p1Allele1, p1Allele2] = genotypesMap[p1Genotype];
+        <div id="result">
+            ここに予測結果が表示されます。
+        </div>
 
-        possibleParent2Genotypes.forEach(p2Genotype => {
-            const [p2Allele1, p2Allele2] = genotypesMap[p2Genotype];
+        <footer>
+            <p>※このツールはABO式血液型の一般的な遺伝法則に基づいています。Rh因子は考慮していません。</p>
+            <p>※血液型の遺伝には例外や稀なケースも存在します。</p>
+        </footer>
+    </div>
 
-            // 子供の遺伝子型の組み合わせ
-            const childAllelePairs = [
-                [p1Allele1, p2Allele1],
-                [p1Allele1, p2Allele2],
-                [p1Allele2, p2Allele1],
-                [p1Allele2, p2Allele2]
-            ];
-
-            childAllelePairs.forEach(pair => {
-                let childBloodType;
-                const sortedPair = pair.sort(); // 遺伝子をアルファベット順にソート（例: ['A', 'O'] -> 'AO'）
-
-                if (sortedPair[0] === 'A' && sortedPair[1] === 'A') {
-                    childBloodType = 'A';
-                } else if (sortedPair[0] === 'A' && sortedPair[1] === 'O') {
-                    childBloodType = 'A';
-                } else if (sortedPair[0] === 'B' && sortedPair[1] === 'B') {
-                    childBloodType = 'B';
-                } else if (sortedPair[0] === 'B' && sortedPair[1] === 'O') {
-                    childBloodType = 'B';
-                } else if (sortedPair[0] === 'O' && sortedPair[1] === 'O') {
-                    childBloodType = 'O';
-                } else if (sortedPair[0] === 'A' && sortedPair[1] === 'B') {
-                    childBloodType = 'AB';
-                }
-                if (childBloodType) {
-                    possibleChildBloodTypes.add(childBloodType);
-                }
-            });
-        });
-    });
-
-    const prediction = Array.from(possibleChildBloodTypes).sort().join('型、') + '型';
-    
-    if (prediction === '') {
-        resultDiv.innerHTML = '<strong>エラー: 予測できませんでした。</strong>';
-        resultDiv.style.backgroundColor = '#ffebee';
-        resultDiv.style.borderColor = '#ffcdd2';
-        resultDiv.style.color = '#d32f2f';
-    } else {
-        resultDiv.innerHTML = `子供の血液型は<br> <strong>${prediction}</strong><br> になる可能性があります。`;
-        resultDiv.style.backgroundColor = '#e8f5e9';
-        resultDiv.style.borderColor = '#c8e6c9';
-        resultDiv.style.color = '#2e7d32';
-    }
-}
+    <script src="script.js"></script>
+</body>
+</html>
