@@ -73,20 +73,31 @@
             background-color: #e8f5e9;
             border: 1px solid #c8e6c9;
             border-radius: 5px;
-            text-align: center;
+            
+            /* 修正点: text-alignは残し、flexboxの justify-content と align-items でブロック全体を中央揃え */
+            text-align: center; /* 各行のテキストを中央揃えにする */
+            
             font-size: 1.1em;
             color: #2e7d32;
-            min-height: 4.5em; /* 約4行分の高さ (font-size 1.1em * line-height * 4行) */
-            display: flex;
-            align-items: center; /* 垂直方向の中央揃え */
-            justify-content: center; /* 水平方向の中央揃え */
-            line-height: 1.2; /* 行の高さを調整して、より自然な改行を促す */
+            
+            /* 修正点: 高さを確保し、Flexboxで垂直方向の中央揃えを維持 */
+            min-height: 4.5em; /* 1.1em * 1.2(line-height) * 3行 = 3.96em。余裕を持たせて4.5em */
+            display: flex; /* Flexboxを有効にする */
+            flex-direction: column; /* 要素を縦方向に並べる */
+            justify-content: center; /* 垂直方向の中央揃え */
+            align-items: center; /* 水平方向の中央揃え (flexアイテムが単一行の場合) */
+            line-height: 1.2; /* 行の高さ */
 
-            white-space: normal; /* テキストの自動改行を許可する (デフォルト値) */
-            word-break: keep-all; /* 単語の途中で改行しないようにする（「型、」などの区切りで改行されやすくなる） */
-            overflow-x: hidden; /* 横方向のスクロールバーを非表示にする */
+            /* 自動改行の許可 */
+            white-space: normal; /* テキストの自動改行を許可 */
+            word-break: keep-all; /* 日本語などの単語の区切りを優先して改行 */
+            overflow-x: hidden; /* 横方向のスクロールバーを非表示 */
         }
         #result strong {
+            /* strongタグ内のテキストも中央揃えを維持するために、
+               display: block; を追加してブロック要素として扱い、text-align: center; を適用 */
+            display: block;
+            text-align: center;
             color: #1b5e20;
         }
         footer {
