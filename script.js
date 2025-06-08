@@ -11,8 +11,8 @@ function predictBloodType() {
     const resultDiv = document.getElementById('result');
 
     // 親のどちらかがZ型の場合、子供は必ずZ型
-    if (parent1BloodType === 'Z' || parent2BloodType === 'Z') {
-        resultDiv.innerHTML = `子供の血液型は <strong>Z型</strong> になる可能性があります。`;
+    if (parent1BloodType === '荒川型' || parent2BloodType === '荒川型') {
+        resultDiv.innerHTML = `おめでとうございます！<br>子供の血液型は<br> <strong>荒川型</strong><br> になります！`;
         resultDiv.style.backgroundColor = '#e8f5e9';
         resultDiv.style.borderColor = '#c8e6c9';
         resultDiv.style.color = '#2e7d32';
@@ -24,7 +24,6 @@ function predictBloodType() {
     // B型 -> [BB, BO]
     // O型 -> [OO]
     // AB型 -> [AB]
-    // Z型はここでは扱わないため追加しない
     function getGenotypes(bloodType) {
         switch (bloodType) {
             case 'A': return ['AA', 'AO'];
@@ -100,7 +99,7 @@ function predictBloodType() {
         resultDiv.style.borderColor = '#ffcdd2';
         resultDiv.style.color = '#d32f2f';
     } else {
-        resultDiv.innerHTML = `子供の血液型は <strong>${prediction}</strong> になる可能性があります。`;
+        resultDiv.innerHTML = `子供の血液型は<br><strong>${prediction}</strong><br>になる可能性があります。`;
         resultDiv.style.backgroundColor = '#e8f5e9';
         resultDiv.style.borderColor = '#c8e6c9';
         resultDiv.style.color = '#2e7d32';
